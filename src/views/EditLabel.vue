@@ -91,7 +91,9 @@ export default class EditLabel extends vue {
   align-items: center;
   height: 48px;
   position: relative;
-  background-color: #fff;
+  background-color: #cfd6f3;
+  color: #5771c9;
+  // border-bottom: 1px solid #869ef0;
   > .link {
     margin-left: 24px;
   }
@@ -104,26 +106,25 @@ export default class EditLabel extends vue {
     transform: translate(-50%);
   }
 }
-// .labelName {
-//   background-color: #fff;
-//   //   border: 1px solid blue;
-//   margin-top: 8px;
-//   height: 44px;
-//   display: flex;
-//   align-items: center;
-//   span {
-//     margin-left: 20px;
-//   }
-// }
+
 .labelName {
-  background-color: #fff;
+  // border: 1px solid red;
+  // background-color: #fff;
   margin-top: 8px;
 }
-
+::v-deep.notes {
+  // border: 1px solid red;
+  background-color: #e5e7ee;
+  color: #5771c9;
+}
+::v-deep.notes > input {
+  background-color: #e5e7ee;
+  color: #5771c9;
+}
 .deleteButton {
   width: 98px;
   height: 40px;
-  background-color: #767676;
+  background-color: #788bca;
   border: none;
   border-radius: 4px;
   color: white;

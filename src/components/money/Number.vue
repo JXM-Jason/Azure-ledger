@@ -23,7 +23,7 @@
 <script lang="ts">
 import vue from "vue";
 import Component from "vue-class-component";
-import { Prop, Watch } from "vue-property-decorator";
+import { Prop } from "vue-property-decorator";
 @Component
 export default class Number extends vue {
   @Prop(Array) oneTag!: string[];
@@ -75,6 +75,8 @@ export default class Number extends vue {
     padding: 9px 16px;
     text-align: right;
     height: 72px;
+    border-bottom: 1px solid #5a7ff7;
+    border-top: 1px solid #5a7ff7;
   }
   .buttons {
     @extend %clearfix;
@@ -92,7 +94,8 @@ export default class Number extends vue {
       &.zero {
         width: 25 * 2%;
       }
-      $bg: #f2f2f2;
+      // $bg: #f2f2f2;
+      $bg: #e4e9f7;
       &:nth-child(1) {
         background: $bg;
       }

@@ -40,7 +40,7 @@ export default class Tabs extends vue {
 .type {
   ul {
     display: flex;
-    background-color: #c4c4c4;
+    background-color: #96aef5;
     text-align: center;
     line-height: 64px;
   }
@@ -52,14 +52,18 @@ export default class Tabs extends vue {
     border: none;
     font-size: 24px;
     position: relative;
-    &.selected::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: #333;
+    // &.selected::after {
+    //   content: "";
+    //   position: absolute;
+    //   bottom: 0;
+    //   left: 0;
+    //   width: 100%;
+    //   height: 4px;
+    //   background: #2a57df;
+    // }
+    &.selected {
+      color: #fff;
+      background-color: #7692e6;
     }
   }
 }

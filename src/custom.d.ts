@@ -2,6 +2,7 @@ interface RootState {
   recordList: RecordItem[];
   tagList: Tag[];
   currentTag?: Tag;
+  createTagError: Error | null;
 }
 interface RecordItem {
   tags: Tag[];

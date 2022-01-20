@@ -1,5 +1,9 @@
 <template>
   <div>
+    <ul class="incomeAndspending">
+      <li class="red">- {{ this.classifyData(this.time)[0] }}</li>
+      <li class="green">+{{ this.classifyData(this.time)[1] }}</li>
+    </ul>
     <div ref="root" class="root" v-show="showModule()"></div>
     <div v-show="!showModule()">
       <div for="" class="label">
@@ -20,12 +24,12 @@ import * as echarts from "echarts";
 import dayjs from "dayjs";
 import clone from "../lib/clone";
 export default {
-  props: ["recordData", "nowTime", "nowType"],
+  props: ["nowTime", "nowType"],
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   data() {
     return {
       // Data: this.recordData,
-      Data: clone(this.$store.state.recordList),
+      Data: this.$store.state.recordList,
       time: this.nowTime,
       type: this.nowType,
       myChartInstance: null,
@@ -54,10 +58,16 @@ export default {
     this.$refs.root.style.width = `${width}px`;
     this.$refs.root.style.height = `${width * 1.2}px`;
     this.myChartInstance = echarts.init(this.$refs.root);
-
     this.myChartInstance.setOption({
       tooltip: {
         show: true,
+      },
+      legend: {
+        type: "scroll",
+        orient: "vertical",
+        left: 32,
+        top: 20,
+        bottom: 20,
       },
       series: [
         {
@@ -91,63 +101,55 @@ export default {
       filterData.forEach((item) => {
         resultData.push({ value: item.number, name: item.tags[0].name });
       });
+      // console.log("resultData");
+      // console.log(resultData);
       return resultData;
     },
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    classifyData(time) {
+      if (this.Data.length < 0) {
+        return;
+      }
+      let resultData = [];
+      let filterData = [];
+      let spendingArray = [];
+      let incomeArray = [];
+      let spendingValue = 0;
+      let incomeValue = 0;
+      // let inputTime = dayjs(this.nowTime).format("YYYY-MM-DD");
+      let inputTime = dayjs(time).format("YYYY-MM-DD");
+      filterData = this.Data.filter((item) => item.createdAt === inputTime);
+      filterData.forEach((item) => {
+        resultData.push({
+          value: item.number,
+          name: item.tags[0].name,
+          type: item.type,
+        });
+      });
+      resultData.forEach((item) => {
+        if (item.type === "-") {
+          spendingArray.push(item.value);
+        } else if (item.type === "+") {
+          incomeArray.push(item.value);
+        }
+      });
+      spendingArray.forEach((item) => {
+        spendingValue += item;
+      });
+      incomeArray.forEach((item) => {
+        incomeValue += item;
+      });
+
+      return [spendingValue, incomeValue];
+    },
     updateChartsData(newData) {
       const prevOption = this.myChartInstance.getOption();
+      prevOption.legend.data = newData;
       prevOption.series[0].data = newData;
+
       this.myChartInstance.setOption(prevOption);
     },
   },
-  // methods: {
-  //   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  //   showModule() {
-  //     if (this.findData().length > 0) {
-  //       return true;
-  //     } else {
-  //       return false;
-  //     }
-  //   },
-  //   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  //   findData() {
-  //     if (this.Data.length === 0) {
-  //       return [];
-  //     }
-  //     let resultData = [];
-  //     let inputTime = dayjs(this.nowTime).format("YYYY-MM-DD");
-  //     let currentItem = [];
-  //     console.log(this.Data);
-  //     // this.Data.filter((t) => t.type === this.Type);
-  //     for (let i = 0; i < this.Data.length; i++) {
-  //       if (dayjs(this.Data[i].title).format("YYYY-MM-DD") === inputTime) {
-  //         // console.log("选出了相同时间的数据");
-  //         // console.log(this.Data[i]);
-  //         // console.log(this.Data[i].items);
-  //         this.Data[i].items.forEach((t) => currentItem.push(t));
-  //       }
-  //     }
-  //     // console.log("我是current");
-  //     // console.log(currentItem);
-  //     currentItem.filter((t) => t.type === this.Type);
-  //     console.log("我是分类的");
-  //     console.log(this.currentItem);
-  //     currentItem.forEach((t) =>
-  //       resultData.push({
-  //         value: t.number,
-  //         name: t.tags[0].name,
-  //       })
-  //     );
-  //     // console.log(resultData);
-  //     return resultData;
-  //   },
-  //   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  //   updateChartsData(newData) {
-  //     const prevOption = this.myChartInstance.getOption();
-  //     prevOption.series[0].data = newData;
-  //     this.myChartInstance.setOption(prevOption);
-  //   },
-  // },
 };
 </script>
 
@@ -177,6 +179,28 @@ export default {
       height: 40px;
       text-align: center;
       line-height: 40px;
+    }
+  }
+}
+.incomeAndspending {
+  // border: 1px solid red;
+  display: flex;
+  margin-top: 20px;
+  justify-content: space-around;
+  li {
+    display: block;
+    width: 120px;
+    text-align: center;
+    // line-height: 40px;
+    padding: 10px;
+    box-shadow: 0 0 2px;
+    background-color: #ffffff;
+    // border: 1px solid blue;
+    &.red {
+      color: red;
+    }
+    &.green {
+      color: green;
     }
   }
 }

@@ -1,20 +1,11 @@
 <template>
   <layout>
     <Tabs classPrefix="types" :datasource="recordTypeList" :value.sync="type" />
-
-    <div v-if="this.groupedList.length > 0">
+    <div>
       <Notes type="date" class="dateChoose" :value.sync="todyTime" />
-      <ul class="incomeAndspending">
-        <li class="green">-支出</li>
-        <li class="red">+收入</li>
-      </ul>
-      <Mycharts
-        :recordData="this.groupedList"
-        :nowTime.sync="todyTime"
-        :nowType.sync="type"
-      />
+      <Mycharts :nowTime.sync="todyTime" :nowType.sync="type" />
     </div>
-    <div v-else class="Norecord">目前没有记录</div>
+    <!-- <div v-else class="Norecord">目前没有记录</div> -->
 
     <!-- <ul v-if="this.groupedList.length > 0">
       <li v-for="(group, index) in groupedList" :key="index">
@@ -175,28 +166,6 @@ export default class Statistics extends vue {
 ::v-deep.dateChoose > input {
   background-color: #ffffff;
   height: 40px;
-}
-.incomeAndspending {
-  // border: 1px solid red;
-  display: flex;
-  margin-top: 20px;
-  justify-content: space-around;
-  li {
-    display: block;
-    width: 100px;
-    height: 40px;
-    text-align: center;
-    line-height: 40px;
-    box-shadow: 0 0 2px;
-    background-color: #ffffff;
-    // border: 1px solid blue;
-    &.red {
-      color: red;
-    }
-    &.green {
-      color: green;
-    }
-  }
 }
 </style>
 

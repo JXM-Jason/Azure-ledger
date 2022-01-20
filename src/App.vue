@@ -16,4 +16,9 @@ body {
   font-size: 16px;
   background-color: #f5f5f5;
 }
+#app {
+  max-width: 500px;
+  margin: 0 auto;
+  box-shadow: 1px 2px 5px 4px rgba(0, 0, 0, 0.2);
+}
 </style>

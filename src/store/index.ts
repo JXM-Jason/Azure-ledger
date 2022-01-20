@@ -10,6 +10,7 @@ const store = new Vuex.Store({
     recordList: [],
     tagList: [],
     currentTag: undefined,
+    createTagError: null,
   } as RootState,
   mutations: {
     //recordList
@@ -43,12 +44,25 @@ const store = new Vuex.Store({
       state.tagList = JSON.parse(
         window.localStorage.getItem("tagList") || "[]"
       );
+      if (!state.tagList || state.tagList.length === 0) {
+        store.commit("createTag", { name: "衣服", type: "-", flag: true });
+        store.commit("createTag", { name: "食物", type: "-", flag: true });
+        store.commit("createTag", { name: "住宿", type: "-", flag: true });
+        store.commit("createTag", { name: "出行", type: "-", flag: true });
+
+        store.commit("createTag", { name: "工资", type: "+", flag: true });
+        store.commit("createTag", { name: "理财", type: "+", flag: true });
+        store.commit("createTag", { name: "兼职", type: "+", flag: true });
+        store.commit("createTag", { name: "零花钱", type: "+", flag: true });
+      }
       return state.tagList;
     },
-    createTag(state, [name, type]) {
+    createTag(state, { name, type, flag }) {
       const names = state.tagList.map((t: { name: string }) => t.name);
       if (names.indexOf(name) >= 0) {
         window.alert("标签名重复了");
+        // state.createTagError = new Error("tag name duplicated ");
+        return;
       } else if (name === "") {
         window.alert("标签名不能为空");
       } else if (name === null) {
@@ -57,7 +71,11 @@ const store = new Vuex.Store({
         const id = createID().toString();
         state.tagList.push({ id: id, name: name, type: type });
         store.commit("saveTags");
-        window.alert("添加成功");
+        if (flag === true) {
+          return;
+        } else {
+          window.alert("添加成功");
+        }
       }
     },
     saveTags(state) {
@@ -101,5 +119,5 @@ const store = new Vuex.Store({
     },
   },
 });
-
+store.commit("fetchTags");
 export default store;

@@ -23,8 +23,7 @@
 
 <script lang="ts">
 import vue from "vue";
-import { Component, Watch } from "vue-property-decorator";
-import store from "../store/index";
+import { Component } from "vue-property-decorator";
 @Component({
   computed: {
     tagList() {
@@ -36,13 +35,8 @@ export default class Labels extends vue {
   created() {
     this.$store.commit("fetchTags");
   }
-  // tags = this.$store.state.tagList;
-  // @Watch("tags")
-  // watchTags() {
-  //   console.log("jxm");
-  //   console.log(this.tags);
-  // }
   CreateNewTag() {
+    let flag = false;
     const Tagname = window.prompt("请输入标签名！");
     let TagType = window.prompt("请输入标签类型，支出或收入");
     if (TagType === "支出" || TagType === "收入") {
@@ -51,7 +45,11 @@ export default class Labels extends vue {
       } else {
         TagType = "+";
       }
-      this.$store.commit("createTag", [Tagname, TagType]);
+      this.$store.commit("createTag", {
+        name: Tagname,
+        type: TagType,
+        flag: flag,
+      });
     } else {
       alert("请重新输入类型，支出或收入！");
     }
@@ -62,16 +60,17 @@ export default class Labels extends vue {
 <style lang="scss" scoped>
 .tags {
   padding-left: 15px;
-  background-color: #fff;
+  background-color: #e6eaf5;
+  color: rgb(128, 126, 126);
   > .link {
-    border-bottom: 1px solid #bcbbc1;
+    border-bottom: 1px solid#7f9af5;
     display: flex;
     justify-content: space-between;
     align-items: center;
     min-height: 44px;
     font-size: 16px;
     svg {
-      color: #666;
+      color: rgb(155, 146, 146);
       margin-right: 15px;
       width: 20px;
       height: 20px;
@@ -87,7 +86,8 @@ export default class Labels extends vue {
     border: none;
     border-radius: 4px;
     font-size: 17px;
-    background-color: #767676;
+    // background-color: #767676;
+    background-color: #788bca;
   }
 }
 </style>
