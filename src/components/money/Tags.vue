@@ -58,7 +58,7 @@ export default class Tags extends vue {
     if (index >= 0) {
       this.selectTags.splice(index, 1);
     } else {
-      if (this.selectTags.length < 4) {
+      if (this.selectTags.length < 3) {
         this.selectTags.forEach((item: any) => {
           if (item.type !== this.Type) {
             this.selectTags = [];
@@ -66,7 +66,8 @@ export default class Tags extends vue {
         });
         this.selectTags.push(tag);
       } else {
-        alert("最多选择4个标签！");
+        this.selectTags = [];
+        alert("最多选择3个标签！");
       }
     }
 

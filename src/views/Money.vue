@@ -1,7 +1,7 @@
 <template>
   <layout class="layout1">
     <Tabs :datasource="recordTypeList" :value.sync="record.type" />
-    <!-- {{ record }} -->
+    {{ record }}
 
     <Tags @update:value="onUpdateTags" :Type.sync="record.type" />
     <Notes
