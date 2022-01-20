@@ -70,7 +70,6 @@ export default class Tags extends vue {
         alert("最多选择3个标签！");
       }
     }
-
     this.$emit("update:value", this.selectTags);
   }
   addTags() {
