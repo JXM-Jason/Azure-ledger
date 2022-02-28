@@ -5,6 +5,7 @@
       <li class="green">+{{ this.classifyData(this.time)[1] }}</li>
     </ul>
     <div ref="root" class="root" v-show="showModule()"></div>
+
     <div v-show="!showModule()">
       <div for="" class="label">
         <icon name="NoData" />
@@ -54,9 +55,15 @@ export default {
 
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   mounted() {
-    let width = document.body.clientWidth;
-    this.$refs.root.style.width = `${width}px`;
-    this.$refs.root.style.height = `${width * 1.2}px`;
+    // let width = document.body.clientWidth;
+    // console.log("clientwidth");
+    // console.log(document.body.clientWidth);
+
+    //echarts饼图所在div的width因该和支出收入按钮宽度之和相同
+    // let width = 481.2;
+    // this.$refs.root.style.width = `${width}px`;
+    // this.$refs.root.style.height = `${width * 1.2}px`;
+    this.$refs.root.style.height = 400 + "px";
     this.myChartInstance = echarts.init(this.$refs.root);
     this.myChartInstance.setOption({
       tooltip: {
@@ -74,6 +81,7 @@ export default {
           type: "pie",
           data: this.findData(),
           radius: "50%",
+          center: ["50%", "50%"],
         },
       ],
     });

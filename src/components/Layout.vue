@@ -21,5 +21,6 @@ export default {};
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  // overflow: hidden;
 }
 </style>
