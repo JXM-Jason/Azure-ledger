@@ -56,6 +56,8 @@ export default class Number extends vue {
     if (this.oneTag.length > 0) {
       this.$emit("update:value", this.output);
       this.$emit("submit", this.output);
+    } else if (this.output === "0") {
+      alert("收支为0不计入账本，请重新输入！");
     } else {
       alert("请至少选择一个标签！");
     }
