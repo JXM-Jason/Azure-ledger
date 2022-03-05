@@ -63,8 +63,8 @@ export default {
     // let width = 481.2;
     // this.$refs.root.style.width = `${width}px`;
     // this.$refs.root.style.height = `${width * 1.2}px`;
-    this.$refs.root.style.height = 400 + "px";
-    this.myChartInstance = echarts.init(this.$refs.root);
+    // this.$refs.root.style.height = 400 + "px";
+    this.myChartInstance = echarts.init(this.$refs.root, null, { height: 400 });
     this.myChartInstance.setOption({
       tooltip: {
         show: true,
